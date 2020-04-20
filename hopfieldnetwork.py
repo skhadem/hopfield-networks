@@ -20,6 +20,17 @@ class HopfieldNetwork:
             self.W += np.matmul(p, p.T)
         else:
             self.W += (np.matmul(p, p.T) - np.eye(self.n))
+            print(self.W)
+
+    def store_information(self, pattern):
+        # TODO: naive implemenation, super slow. Need to convert to matrix mults
+        for i in range(0, self.n):
+            for j in range(0, i):
+                if (i != j):
+                    weight = pattern[i]*pattern[j]
+                    self.W[i,j] = weight
+                    self.W[j,i] = weight
+
 
     def batch_update(self, patterns):
         """
@@ -39,5 +50,11 @@ class HopfieldNetwork:
         :param tol: tolerance for fixed point convergence
         :return: network recall output
         """
-        # TODO: implement network evolution asynchronously
-        pass
+        output_pattern = np.zeros(self.n)
+        for i in range(0, self.n):
+            if np.sum(self.W[i,:]*x) > tol:
+                output_pattern[i] = 1
+            else:
+                output_pattern[i] = -1
+
+        return output_pattern
