@@ -16,16 +16,14 @@ class HopfieldNetwork:
         :param p: pattern for network to memorize
         :param in_batch: whether or not this update is occurring as part of a batch update
         """
+        # flat array, need to make column vector
+        if len(p.shape) == 1:
+            p = p.reshape(len(p), 1)
+
         if in_batch:
             self.W += np.matmul(p, p.T)
         else:
-            self.store_information(p.flatten())
-
-    def store_information(self, pattern):
-        for i in range(0, self.n):
-            self.W[i,:] += pattern[i]*pattern
-        
-        np.fill_diagonal(self.W, 0)
+            self.W += (np.matmul(p, p.T)  - np.eye(self.n))
 
     def batch_update(self, patterns):
         """
