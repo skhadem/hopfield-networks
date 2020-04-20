@@ -31,7 +31,6 @@ class HopfieldNetwork:
                     self.W[i,j] = weight
                     self.W[j,i] = weight
 
-
     def batch_update(self, patterns):
         """
         Update network weight matrix according to multiple patterns
@@ -50,11 +49,6 @@ class HopfieldNetwork:
         :param tol: tolerance for fixed point convergence
         :return: network recall output
         """
-        output_pattern = np.zeros(self.n)
-        for i in range(0, self.n):
-            if np.sum(self.W[i,:]*x) > tol:
-                output_pattern[i] = 1
-            else:
-                output_pattern[i] = -1
-
+        output_pattern = np.sign(np.matmul(self.W, x))
+        output_pattern[output_pattern == 0] = 1
         return output_pattern
