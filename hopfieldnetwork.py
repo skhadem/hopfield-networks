@@ -19,17 +19,13 @@ class HopfieldNetwork:
         if in_batch:
             self.W += np.matmul(p, p.T)
         else:
-            self.W += (np.matmul(p, p.T) - np.eye(self.n))
-            print(self.W)
+            self.store_information(p.flatten())
 
     def store_information(self, pattern):
-        # TODO: naive implemenation, super slow. Need to convert to matrix mults
         for i in range(0, self.n):
-            for j in range(0, i):
-                if (i != j):
-                    weight = pattern[i]*pattern[j]
-                    self.W[i,j] = weight
-                    self.W[j,i] = weight
+            self.W[i,:] += pattern[i]*pattern
+        
+        np.fill_diagonal(self.W, 0)
 
     def batch_update(self, patterns):
         """
@@ -42,7 +38,7 @@ class HopfieldNetwork:
         self.W -= len(patterns) * np.eye(self.n)
         self.W /= self.n
 
-    def recall(self, x, tol=1e-1):
+    def recall(self, x, tol=1e-1, max_iter=100):
         """
         Get network recall output for input x
         :param x: input similar to one of stable state patterns network has been trained on
@@ -51,12 +47,19 @@ class HopfieldNetwork:
         """
 
         mse = np.inf
-
-        while mse >= tol:
+        iter_ = 0
+        while mse >= tol and iter_ <= max_iter:
             print(mse, end='\r')
             z = np.sign(np.matmul(self.W, x))
             z[z == 0] = 1
             mse = np.sum((z-x)**2)
             x = z
+
+            iter_ += 1
+        
+        if (iter_ > max_iter):
+            print("Hit max iters")
+        if (mse < tol):
+            print("Hit MSE goal")
 
         return x
