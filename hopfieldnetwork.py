@@ -49,6 +49,14 @@ class HopfieldNetwork:
         :param tol: tolerance for fixed point convergence
         :return: network recall output
         """
-        output_pattern = np.sign(np.matmul(self.W, x))
-        output_pattern[output_pattern == 0] = 1
-        return output_pattern
+
+        mse = np.inf
+
+        while mse >= tol:
+            print(mse, end='\r')
+            z = np.sign(np.matmul(self.W, x))
+            z[z == 0] = 1
+            mse = np.sum((z-x)**2)
+            x = z
+
+        return x
