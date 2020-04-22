@@ -41,6 +41,7 @@ class HopfieldNetwork:
         Get network recall output for input x
         :param x: input similar to one of stable state patterns network has been trained on
         :param tol: tolerance for fixed point convergence
+        :param max_iter: max number of fixed point iterations
         :return: network recall output
         """
 
@@ -55,9 +56,9 @@ class HopfieldNetwork:
 
             iter_ += 1
 
-        if (iter_ > max_iter):
+        if iter_ > max_iter:
             print("Hit max iters")
-        if (mse < tol):
+        if mse < tol:
             print("Hit MSE goal")
 
         return x
