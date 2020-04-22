@@ -22,15 +22,6 @@ class HopfieldNetwork:
             self.W += (np.matmul(p, p.T) - np.eye(self.n))
             print(self.W)
 
-    def store_information(self, pattern):
-        # TODO: naive implemenation, super slow. Need to convert to matrix mults
-        for i in range(0, self.n):
-            for j in range(0, i):
-                if (i != j):
-                    weight = pattern[i]*pattern[j]
-                    self.W[i,j] = weight
-                    self.W[j,i] = weight
-
     def batch_update(self, patterns):
         """
         Update network weight matrix according to multiple patterns
@@ -53,7 +44,6 @@ class HopfieldNetwork:
         mse = np.inf
 
         while mse >= tol:
-            print(mse, end='\r')
             z = np.sign(np.matmul(self.W, x))
             z[z == 0] = 1
             mse = np.sum((z-x)**2)
