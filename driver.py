@@ -30,8 +30,6 @@ def main():
     show_noise = False
     verbose = False
     num_inputs = 100
-    hn = HopfieldNetwork(num_inputs)
-    
     plot_x = []
     plot_y = []
     count = 0
@@ -39,14 +37,15 @@ def main():
     # different noise levels
     for noise in np.arange(0, 1, 0.005):
         # train on a random array
+        hn = HopfieldNetwork(num_inputs)
         input_vec = create_random_array(num_inputs, 0.5)
-        hn.store_information(input_vec)
+        hn.update(input_vec)
         for _ in range(0, 10):
             # create new noise vector
             noisy_input = create_noisy_array(input_vec, noise)
 
             # recall
-            recovered_array = hn.recall(noisy_input, 0)
+            recovered_array = hn.recall(noisy_input)
 
             # count number correct
             num_correct = 0
