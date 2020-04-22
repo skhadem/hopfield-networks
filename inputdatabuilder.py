@@ -85,3 +85,33 @@ class InputDataBuilder:
             noisy_imgs.append(InputDataBuilder._add_salt_pepper_noise(img, p_salt, p_noise))
 
         return noisy_imgs
+
+    @classmethod
+    def _rotate_img(cls, img, theta):
+        rows, cols = img.shape
+        M = cv2.getRotationMatrix2D((cols/2, rows/2), theta, 1)
+        return cv2.warpAffine(img, M, (cols, rows))
+
+    def get_rotated_imgs(self, theta):
+        return list(map(lambda img: InputDataBuilder._rotate_img(img, theta), self.deserialize()))
+
+    @classmethod
+    def _translate_img(cls, img, x, y):
+        rows, cols = img.shape
+        M = np.float32([[1, 0, x], [0, 1, y]])
+        return cv2.warpAffine(img, M, (cols, rows))
+
+    def get_translated_imgs(self, x, y):
+        return list(map(lambda img: InputDataBuilder._translate_img(img, x, y), self.deserialize()))
+
+    @classmethod
+    def _stretch_img(cls, img, x, y):
+        rows, cols = img.shape
+        new_rows, new_cols = int(x*cols), int(y*rows)
+        img_background = np.zeros(img.shape, dtype=img.dtype)
+        stretched_img = cv2.resize(img, (new_rows, new_cols))
+        img_background[:min(new_rows, rows), :min(new_cols, cols)] = stretched_img[:min(new_rows, rows), :min(new_cols, cols)]
+        return img_background
+
+    def get_stretched_imgs(self, x, y):
+        return list(map(lambda img: InputDataBuilder._stretch_img(img, x, y), self.deserialize()))
