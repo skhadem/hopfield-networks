@@ -8,7 +8,7 @@ class HopfieldNetwork:
         :param n: number of neurons (length of input vector)
         """
         self.n = n
-        self.W = np.zeros((n, n))
+        self.W = np.zeros((n, n), dtype=np.float16)
 
     def update(self, p, in_batch=False):
         """
@@ -34,7 +34,7 @@ class HopfieldNetwork:
             self.update(p, in_batch=True)
 
         self.W -= len(patterns) * np.eye(self.n)
-        self.W /= self.n
+        self.W /= len(patterns)
 
     def recall(self, x, tol=1e-3, max_iter=100):
         """
