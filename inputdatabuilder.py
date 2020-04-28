@@ -108,8 +108,9 @@ class InputDataBuilder:
         rows, cols = img.shape
         new_rows, new_cols = int(x*cols), int(y*rows)
         img_background = np.zeros(img.shape, dtype=img.dtype)
-        stretched_img = cv2.resize(img, (new_rows, new_cols))
-        img_background[:min(new_rows, rows), :min(new_cols, cols)] = stretched_img[:min(new_rows, rows), :min(new_cols, cols)]
+        stretched_img = cv2.resize(img, (new_cols, new_rows))
+        img_background[:min(new_rows, rows), :min(new_cols, cols)] = \
+            stretched_img[:min(new_rows, rows), :min(new_cols, cols)]
         return img_background
 
     def get_stretched_imgs(self, x, y):
