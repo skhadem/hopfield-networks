@@ -1,0 +1,13 @@
+data/MPEG7_CE-Shape-1_Part_B/apple-1.gif,data/MPEG7_CE-Shape-1_Part_B/turtle-9.gif,data/MPEG7_CE-Shape-1_Part_B/ray-4.gif,data/MPEG7_CE-Shape-1_Part_B/rat-19.gif,data/MPEG7_CE-Shape-1_Part_B/personal_car-15.gif
+(('trans', (10, 0)), ('snp', (0.2,)))
+(('trans', (10, 0)), ('snp', (0.4,)))
+(('trans', (10, 0)), ('snp', (0.6,)))
+(('trans', (20, 0)), ('snp', (0.2,)))
+(('trans', (20, 0)), ('snp', (0.4,)))
+(('trans', (20, 0)), ('snp', (0.6,)))
+(('trans', (40, 0)), ('snp', (0.2,)))
+(('trans', (40, 0)), ('snp', (0.4,)))
+(('trans', (40, 0)), ('snp', (0.6,)))
+(('trans', (60, 0)), ('snp', (0.2,)))
+(('trans', (60, 0)), ('snp', (0.4,)))
+(('trans', (60, 0)), ('snp', (0.6,)))
