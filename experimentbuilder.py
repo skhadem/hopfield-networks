@@ -28,7 +28,7 @@ class Experiment:
         "snp": InputDataBuilder._add_salt_pepper_noise,
         "rot": InputDataBuilder._rotate_img,
         "trans": InputDataBuilder._translate_img,
-        "stretch": InputDataBuilder._rotate_img
+        "stretch": InputDataBuilder._stretch_img,
     }
 
     def __init__(self, name, idb, noise_and_params=itertools.product([])):
