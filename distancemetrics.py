@@ -3,7 +3,7 @@ import numpy as np
 
 class DistanceMetrics:
     @classmethod
-    def overlap(cls, normed=False, *args):
+    def overlap(cls, normed, *args):
         """
         Overlap between n vectors specified in args
         :param normed: whether or not to normalize distance
@@ -14,7 +14,7 @@ class DistanceMetrics:
         x = args.pop()
         acc = np.zeros(x.shape) == 0
         while args:
-            acc = x != args.pop()
+            acc = acc != args.pop()
         dist = np.sum(acc)
 
         return dist / np.prod(x.shape) if normed else dist
