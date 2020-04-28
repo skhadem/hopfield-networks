@@ -85,7 +85,9 @@ class ExperimentBuilder:
 
     def reset(self):
         self.n = ExperimentBuilder.DEFAULT_N
-        self.idb = None
+        self.idb = InputDataBuilder(["{}/{}".format(ExperimentBuilder.IMAGES_FPATH, img)
+                                     for img in ExperimentBuilder.DEFAULT_IMGS],
+                                    size=self.size)
         self.noise_sources = {}
         self.params = []
 
