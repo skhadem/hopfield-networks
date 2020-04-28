@@ -8,7 +8,7 @@ class HopfieldNetwork:
         :param n: number of neurons (length of input vector)
         """
         self.n = n
-        self.W = np.zeros((n, n))
+        self.W = np.zeros((n, n), dtype=np.float16)
 
     def update(self, p, in_batch=False):
         """
@@ -36,7 +36,7 @@ class HopfieldNetwork:
         self.W -= len(patterns) * np.eye(self.n)
         self.W /= self.n
 
-    def recall(self, x, tol=1e-1, max_iter=100):
+    def recall(self, x, tol=1e-1, max_iter=100, verbose=False):
         """
         Get network recall output for input x
         :param x: input similar to one of stable state patterns network has been trained on
@@ -50,15 +50,16 @@ class HopfieldNetwork:
         while mse >= tol and iter_ <= max_iter:
             print(mse, end='\r')
             z = np.sign(np.matmul(self.W, x))
-            z[z == 0] = 1
+            z[z == 0] = -1
             mse = np.sum((z-x)**2)
             x = z
 
             iter_ += 1
 
-        if iter_ > max_iter:
-            print("Hit max iters")
-        if mse < tol:
-            print("Hit MSE goal")
+        if verbose:
+            if iter_ > max_iter:
+                print("Hit max iters")
+            if mse < tol:
+                print("Hit MSE goal after %s iterations" % iter_)
 
         return x
