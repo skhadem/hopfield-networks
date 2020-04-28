@@ -34,7 +34,7 @@ class HopfieldNetwork:
             self.update(p, in_batch=True)
 
         self.W -= len(patterns) * np.eye(self.n)
-        self.W /= len(patterns)
+        self.W /= self.n
 
     def recall(self, x, tol=1e-3, max_iter=100):
         """
