@@ -36,7 +36,7 @@ class HopfieldNetwork:
         self.W -= len(patterns) * np.eye(self.n)
         self.W /= self.n
 
-    def recall(self, x, tol=1e-1, max_iter=100):
+    def recall(self, x, tol=1e-3, max_iter=100):
         """
         Get network recall output for input x
         :param x: input similar to one of stable state patterns network has been trained on

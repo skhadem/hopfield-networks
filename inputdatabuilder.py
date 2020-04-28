@@ -59,7 +59,7 @@ class InputDataBuilder:
         return imgs
 
     @classmethod
-    def _add_salt_pepper_noise(cls, img, p_salt=0.5, p_noise=0.25):
+    def _add_salt_pepper_noise(cls, img, p_flip=0.25):
         """
         Add salt and pepper noise to an image
         :param img: target image
@@ -67,13 +67,12 @@ class InputDataBuilder:
         :param p_noise: probability of noise (for a specific pixel)
         :return: noisy image
         """
-        noise = np.random.binomial(1, p_noise, img.shape)
-        salt_pepper = np.random.binomial(1, p_salt, noise[noise==1].shape)
+        flip = np.random.binomial(1, p_flip, img.shape)
         noisy_img = img.copy()
-        noisy_img[noise == 1] = salt_pepper
+        noisy_img[flip == 1] = 1-noisy_img[flip == 1]
         return noisy_img
 
-    def get_salt_pepper_noisy_imgs(self, p_salt=0.5, p_noise=0.25):
+    def get_salt_pepper_noisy_imgs(self, p_flip=0.25):
         """
         Get noisy versions of all images
         :param p_salt: probability of salt (1 - probability of pepper)
@@ -82,7 +81,7 @@ class InputDataBuilder:
         """
         noisy_imgs = []
         for img in self.deserialize():
-            noisy_imgs.append(InputDataBuilder._add_salt_pepper_noise(img, p_salt, p_noise))
+            noisy_imgs.append(InputDataBuilder._add_salt_pepper_noise(img, p_flip))
 
         return noisy_imgs
 

@@ -46,6 +46,8 @@ class Experiment:
         except FileExistsError:
             pass
 
+        np.save("{}/W.npy".format(folder), hn.W)
+
         with open("{}/params.txt".format(folder), 'w') as f:
             f.write(','.join(self.idb.fpaths) + '\n')
 
@@ -76,8 +78,9 @@ class ExperimentBuilder:
     DEFAULT_N = 5
     DEFAULT_IMGS = ["apple-1.gif", "turtle-9.gif", "ray-4.gif", "rat-19.gif", "personal_car-15.gif"]
 
-    def __init__(self, name):
+    def __init__(self, name, size):
         self.name = name
+        self.size = size
         self.reset()
 
     def reset(self):
@@ -101,7 +104,8 @@ class ExperimentBuilder:
 
     def with_imgs(self, fnames):
         self.n = None
-        self.idb = InputDataBuilder(["{}/{}".format(ExperimentBuilder.IMAGES_FPATH, fname) for fname in fnames])
+        self.idb = InputDataBuilder(["{}/{}".format(ExperimentBuilder.IMAGES_FPATH, fname) for fname in fnames],
+                                    size=self.size)
         return self
 
     def build(self):
