@@ -105,15 +105,15 @@ def plot_size_errs():
     # 5 patterns
     n5_idxs = (plot_x == 5)    
     hist, bin_edges = np.histogram(plot_y[n5_idxs], bins, density=True)
-    ax1.bar(range(len(hist)), hist, width=1, edgecolor='k', label="N = 5")
+    ax1.bar(range(len(hist)), hist, width=1, edgecolor='k', label="M = 5")
     ax1.set_xticks([0.5+i for i,j in enumerate(hist)])
     ax1.legend(loc="upper right")
-    ax1.set_title("n = 100")
+    ax1.set_title("N = 100")
 
     # 10 patterns
     n10_idxs = (plot_x == 10)
     hist, bin_edges = np.histogram(plot_y[n10_idxs], bins, density=True)
-    ax2.bar(range(len(hist)), hist, width=1, edgecolor='k', label="N = 10")
+    ax2.bar(range(len(hist)), hist, width=1, edgecolor='k', label="M = 10")
     ax2.set_xticks([0.5+i for i,j in enumerate(hist)])
     ax2.legend(loc="upper right")
     ax2.set_ylabel("Probability")
@@ -121,7 +121,7 @@ def plot_size_errs():
     # 15 patterns
     n15_idxs = (plot_x == 15)
     hist, bin_edges = np.histogram(plot_y[n15_idxs], bins, density=True)
-    ax3.bar(range(len(hist)), hist, width=1, edgecolor='k', label="N = 15")
+    ax3.bar(range(len(hist)), hist, width=1, edgecolor='k', label="M = 15")
     ax3.set_xticks([0.5+i for i,j in enumerate(hist)])
     ax3.set_xticklabels(['{} - {}'.format(bins[i],bins[i+1]) for i,j in enumerate(hist)])
     ax3.legend(loc="upper right")

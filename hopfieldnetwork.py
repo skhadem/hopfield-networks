@@ -41,7 +41,7 @@ class HopfieldNetwork:
         self.W -= len(patterns) * np.eye(self.n)
         self.W /= self.n
 
-    def recall(self, x, tol=1e-1, max_iter=100, verbose=False, save_evolution=0):
+    def recall(self, x, tol=1e-1, max_iter=100, verbose=False, save_evolution=0, evolution_name=None):
         """
         Get network recall output for input x
         :param x: input similar to one of stable state patterns network has been trained on
@@ -62,7 +62,10 @@ class HopfieldNetwork:
             z = np.sign(np.matmul(self.W, x))
             z[z == 0] = -1
             mse = np.sum((z-x)**2)
-            print(mse, end='\r')
+            
+            if verbose:
+                print(mse, end='\n')
+                
             x = z
 
             iter_ += 1
@@ -71,7 +74,7 @@ class HopfieldNetwork:
             # make the last image linger more
             durations = [1 for i in range(0, len(images))]
             durations[-1] = 3
-            imageio.mimsave('data/evolution.gif', images, duration=durations)
+            imageio.mimsave(evolution_name, images, duration=durations)
 
         if verbose:
             if iter_ > max_iter:
